@@ -1,4 +1,5 @@
 import 'source-map-support/register'
+
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
@@ -8,9 +9,9 @@ import { getUserId } from '../utils'
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const docId = event.pathParameters.docId
+    console.log("Generating upload URL - Process event - ", event)
 
-    console.log("Processing Event ", event)
+    const docId = event.pathParameters.docId
     const userId = getUserId(event)
     const uploadUrl = await createAttachmentPresignedUrl(userId, docId)
 

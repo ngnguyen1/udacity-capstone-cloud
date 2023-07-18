@@ -1,4 +1,4 @@
-import { DocsAccess } from '../dataLayer/docsAcess'
+import { DocsAccess } from '../dataLayer/docsAccess'
 import { CreateDocRequest } from '../requests/CreateDocRequest'
 import { UpdateDocRequest } from '../requests/UpdateDocRequest'
 import { createLogger } from '../utils/logger'

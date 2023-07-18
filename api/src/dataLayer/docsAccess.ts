@@ -26,7 +26,7 @@ export class DocsAccess {
       TableName: this.docTable,
       Item: doc
     }).promise()
-    logger.info(`todo ${doc.title} is added`)
+    logger.info(`created ${doc.title}!!`)
     return doc
   }
 
@@ -79,8 +79,9 @@ export class DocsAccess {
   }
 
   public async updateDoc(userId: string, docId: string, doc: DocUpdate) {
+    logger.info(`Updating ${docId} ...`)
+    
     if (userId) {
-      logger.info(`Found todo ${docId}, ready for update`)
       await this.docDocument.update({
         TableName: this.docTable,
         Key: {
