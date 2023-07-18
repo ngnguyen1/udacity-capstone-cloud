@@ -10,7 +10,84 @@
 			"name": "Docs Management",
 			"item": [
 				{
+					"name": "Create docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201)",
+									"})",
+									"",
+									"pm.test(\"The number of docs should be 1\", () => {",
+									"    const jsonData = pm.response.json()",
+									"    pm.expect(jsonData.item.title).to.eql(\"Machine Learning\")",
+									"    pm.collectionVariables.set(\"docId\", jsonData.item.docId)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Machine Learning\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"docs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})",
+									"",
+									"pm.test(\"The number of docs should be 1\", function () {",
+									"    const jsonData = pm.response.json()",
+									"    pm.expect(jsonData.items.length).to.eql(1)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -39,46 +116,20 @@
 					"response": []
 				},
 				{
-					"name": "Create docs",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"title\": \"M\"\n}"
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"docs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Update doc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [
@@ -96,10 +147,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"Zigbee\"\n}"
+							"raw": "{\n\t\"title\": \"Machine learning updated\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/45038bbf-7bea-4ae7-b620-13da208e26c9",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/{{docId}}",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -111,7 +162,7 @@
 							"path": [
 								"dev",
 								"docs",
-								"45038bbf-7bea-4ae7-b620-13da208e26c9"
+								"{{docId}}"
 							]
 						}
 					},
@@ -119,6 +170,19 @@
 				},
 				{
 					"name": "Delete doc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -139,7 +203,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/52edf220-d389-4323-9de2-6b91b521b53e",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/{{docId}}",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -151,7 +215,7 @@
 							"path": [
 								"dev",
 								"docs",
-								"52edf220-d389-4323-9de2-6b91b521b53e"
+								"{{docId}}"
 							]
 						}
 					},
@@ -244,6 +308,11 @@
 		{
 			"key": "authToken",
 			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZlS3RjbWx4aUJIOFhWV0N5UVdDbSJ9.eyJpc3MiOiJodHRwczovL2Rldi13ZXp5NW9uNWluaGJtMzFzLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiI4T1htWlFoMVNOMHV0SUxFRUxPTkFvalJpOWptMTBLQiIsImlhdCI6MTY4OTY3MDAyNiwiZXhwIjoxNjg5NzA2MDI2LCJzdWIiOiJnaXRodWJ8MTQ4Njc5MCIsImF0X2hhc2giOiJmSVZmdXhnVmJVYkZvUG5uSGhodnpnIiwic2lkIjoiMUtqbVhCNVlpazJNN3FfVkp3amVqeUtxcDYwVmRQRlgiLCJub25jZSI6InBxWXUyc3lSeHYwZGxSb3p3OF9wY1NCRUR1QUh4Y1ZUIn0.VcBBlUh3y0lBAu_s-1Yo_xtWISvt6j4puRiIh7ar1H5qx3MliwiCtnEgClKCHhgAMqfd7uAIfz61fp3eFiyRcfB6_hcggNrBUrN5rTM75L0z2DCI9gU8Z9kKstcGJSF4eH09WALcgDnZ-mUQHPgOYpNt997FcK_UHL5IH0Zk4gaEFTQ0YJ3GOYAEtV6Jkmsj8td98PlKSALVj10r_4UUuoio7z4N-Uz8MfWaWEhvaWPx7vYlsqeL7zylxF28fiwt0jo0eglVMHXFiGq6H62M0Y2x2zafkOPnFKYzKGPi5OsKCWu-_athhfrj3Rn-Sm7Q42RLaEAFQPHDZT_oFroSmg",
+			"type": "string"
+		},
+		{
+			"key": "docId",
+			"value": "",
 			"type": "string"
 		}
 	]
