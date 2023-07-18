@@ -173,32 +173,32 @@ functions:
         Resource: 
           - '*'
 
-  # GenerateUploadUrl:
-  #   handler: src/lambda/http/generateUploadUrl.handler
-  #   events:
-  #     - http:
-  #         method: post
-  #         path: todos/{todoId}/attachment
-  #         cors: true
-  #   iamRoleStatements:
-  #     - Effect: 'Allow'
-  #       Action:
-  #         - 'xray:PutTraceSegments'
-  #         - 'xray:PutTelemetryRecords'
-  #       Resource:
-  #         - '*'
-  #     - Effect: Allow
-  #       Action:
-  #         - dynamodb:Scan
-  #         - dynamodb:Query
-  #         - dynamodb:BatchGetItem
-  #         - dynamodb:GetItem
-  #         - dynamodb:UpdateItem
-  #       Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DOCS_TABLE}'
-  #     - Effect: Allow
-  #       Action:
-  #         - s3:PutObject
-  #       Resource: 'arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*'
+  GenerateUploadUrl:
+    handler: src/lambda/http/generateUploadUrl.handler
+    events:
+      - http:
+          method: post
+          path: docs/{docId}/attachment
+          cors: true
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+          - dynamodb:BatchGetItem
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
+        Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DOCS_TABLE}'
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: 'arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*'
 
 resources:
   Resources:
