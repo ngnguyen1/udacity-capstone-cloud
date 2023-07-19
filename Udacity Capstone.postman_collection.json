@@ -51,7 +51,7 @@
 							"raw": "{\n\t\"title\": \"Machine Learning\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -61,7 +61,7 @@
 								"com"
 							],
 							"path": [
-								"dev",
+								"test",
 								"docs"
 							]
 						}
@@ -98,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -108,7 +108,7 @@
 								"com"
 							],
 							"path": [
-								"dev",
+								"test",
 								"docs"
 							]
 						}
@@ -150,7 +150,7 @@
 							"raw": "{\n\t\"title\": \"Machine learning updated\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/{{docId}}",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs/{{docId}}",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -160,9 +160,57 @@
 								"com"
 							],
 							"path": [
-								"dev",
+								"test",
 								"docs",
 								"{{docId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachment URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs/{{docId}}/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"test",
+								"docs",
+								"{{docId}}",
+								"attachment"
 							]
 						}
 					},
@@ -177,6 +225,7 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200)",
+									"    pm.collectionVariables.set(\"docId\", \"\")",
 									"})"
 								],
 								"type": "text/javascript"
@@ -203,7 +252,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/docs/{{docId}}",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs/{{docId}}",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -213,44 +262,9 @@
 								"com"
 							],
 							"path": [
-								"dev",
+								"test",
 								"docs",
 								"{{docId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get attachment URL",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos",
-								"3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
-								"attachment"
 							]
 						}
 					},
@@ -302,12 +316,12 @@
 	"variable": [
 		{
 			"key": "apiId",
-			"value": "ovt4z3e1lh",
+			"value": "fbj5zxcxsi",
 			"type": "string"
 		},
 		{
 			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZlS3RjbWx4aUJIOFhWV0N5UVdDbSJ9.eyJpc3MiOiJodHRwczovL2Rldi13ZXp5NW9uNWluaGJtMzFzLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiI4T1htWlFoMVNOMHV0SUxFRUxPTkFvalJpOWptMTBLQiIsImlhdCI6MTY4OTY3MDAyNiwiZXhwIjoxNjg5NzA2MDI2LCJzdWIiOiJnaXRodWJ8MTQ4Njc5MCIsImF0X2hhc2giOiJmSVZmdXhnVmJVYkZvUG5uSGhodnpnIiwic2lkIjoiMUtqbVhCNVlpazJNN3FfVkp3amVqeUtxcDYwVmRQRlgiLCJub25jZSI6InBxWXUyc3lSeHYwZGxSb3p3OF9wY1NCRUR1QUh4Y1ZUIn0.VcBBlUh3y0lBAu_s-1Yo_xtWISvt6j4puRiIh7ar1H5qx3MliwiCtnEgClKCHhgAMqfd7uAIfz61fp3eFiyRcfB6_hcggNrBUrN5rTM75L0z2DCI9gU8Z9kKstcGJSF4eH09WALcgDnZ-mUQHPgOYpNt997FcK_UHL5IH0Zk4gaEFTQ0YJ3GOYAEtV6Jkmsj8td98PlKSALVj10r_4UUuoio7z4N-Uz8MfWaWEhvaWPx7vYlsqeL7zylxF28fiwt0jo0eglVMHXFiGq6H62M0Y2x2zafkOPnFKYzKGPi5OsKCWu-_athhfrj3Rn-Sm7Q42RLaEAFQPHDZT_oFroSmg",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZlS3RjbWx4aUJIOFhWV0N5UVdDbSJ9.eyJpc3MiOiJodHRwczovL2Rldi13ZXp5NW9uNWluaGJtMzFzLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiI4T1htWlFoMVNOMHV0SUxFRUxPTkFvalJpOWptMTBLQiIsImlhdCI6MTY4OTc1NzA4NCwiZXhwIjoxNjg5NzkzMDg0LCJzdWIiOiJnaXRodWJ8MTQ4Njc5MCIsImF0X2hhc2giOiJVRmp3UmQ0SVBiYXAtRDBEeG5yaXRnIiwic2lkIjoic00zMllzcnlhUllmNjRlTTB5QWxqTnhLZTBWTDhnSDkiLCJub25jZSI6IjZwYTBTNlB-bC5udmdYb2lkS3NyNWxjaGwuajlPd0NGIn0.iAGsJBvvrA-k6heZbJQUkXVzQZ3Kx5m6nKC9ghs0tSoLieAk6sBIABFhB6akepuVP_5ytSUJn0rtObC1Ggy57oK-rYma86ciAHji2GYOCLlpxxIAOg1wPHjLQQl8W66p4-Afp2n6nIUhPxu9MhLo28NQqBXmy8zE08ibivPCk9JelM0GZM3NnYnzTWiezBz6M-RD6enZKVcUa55Gzt8pnccFOOsBw3UGPoEYdZs6GcJExZkqoQVOWAUOggiOUjpK-W0QFtZ7c0sK-M0CLGjGqfaC1kOYV2XGFpdDdKs5Rrmj08FHf4FUqUYzhs-43IpRd7YcWYYM7jLIQsrT3T_MDQ",
 			"type": "string"
 		},
 		{
