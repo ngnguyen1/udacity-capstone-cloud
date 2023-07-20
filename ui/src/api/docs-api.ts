@@ -44,6 +44,19 @@ export async function patchDoc(
   })
 }
 
+export async function getDoc(
+  idToken: string,
+  docId: string
+): Promise<Doc> {
+  const response = await Axios.get(`${apiEndpoint}/docs/${docId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+  return response.data.item
+}
+
 export async function deleteDoc(
   idToken: string,
   docId: string

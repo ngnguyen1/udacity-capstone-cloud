@@ -93,7 +93,6 @@ export class EditDoc extends React.PureComponent<
   }
 
   renderButton() {
-
     return (
       <div>
         {this.state.uploadState === UploadState.FetchingPresignedUrl && <p>Uploading image metadata</p>}

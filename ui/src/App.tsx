@@ -4,6 +4,7 @@ import { Grid, Menu, Segment } from 'semantic-ui-react'
 
 import Auth from './auth/Auth'
 import { EditDoc } from './components/EditDoc'
+import { ViewDoc } from './components/ViewDoc'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
 import { Docs } from './components/Docs'
@@ -93,6 +94,14 @@ export default class App extends Component<AppProps, AppState> {
           exact
           render={props => {
             return <Docs {...props} auth={this.props.auth} />
+          }}
+        />
+
+        <Route
+          path="/docs/:docId"
+          exact
+          render={props => {
+            return <ViewDoc {...props} auth={this.props.auth} />
           }}
         />
 

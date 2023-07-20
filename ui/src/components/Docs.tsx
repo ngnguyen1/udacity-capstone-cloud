@@ -43,6 +43,10 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
     this.props.history.push(`/docs/${docId}/edit`)
   }
 
+  onViewButtonClick = (docId: string) => {
+    this.props.history.push(`/docs/${docId}`)
+  }
+
   onDocCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     try {
       const newDoc = await createDoc(this.props.auth.getIdToken(), {
@@ -99,14 +103,13 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
           <Input
             action={{
               color: 'teal',
-              labelPosition: 'left',
+              labelPosition: 'right',
               icon: 'add',
-              content: 'Create new doc',
+              content: 'Create',
               onClick: this.onDocCreate
             }}
             fluid
-            actionPosition="left"
-            placeholder="new docs..."
+            placeholder="e.g. My new document"
             onChange={this.handleNameChange}
           />
         </Grid.Column>
@@ -136,17 +139,31 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
 
   renderDocsList() {
     return (
-      <Grid padded>
+      <Grid>
         {this.state.docs.map(doc => {
           return (
             <Grid.Row key={doc.docId}>
-              <Grid.Column width={10} verticalAlign="middle">
-                {doc.title}
+              <Grid.Column width={2}>
+                {doc.attachmentUrl && (
+                  <Image src={doc.attachmentUrl} size="small" wrapped verticalAlign="middle" />
+                )}
               </Grid.Column>
-              <Grid.Column width={3} floated="right">
-                {doc.createdAt}
+
+              <Grid.Column width={8} verticalAlign="middle">
+                <h3>{doc.title}</h3>
+                <span className='date'>{doc.createdAt}</span>
               </Grid.Column>
-              <Grid.Column width={1} floated="right">
+
+              <Grid.Column width={2} verticalAlign="middle">
+                <Button
+                  icon
+                  color="orange"
+                  onClick={() => this.onViewButtonClick(doc.docId)}
+                >
+                  <Icon name="eye" />
+                </Button>
+              </Grid.Column>
+              <Grid.Column width={2} verticalAlign="middle">
                 <Button
                   icon
                   color="blue"
@@ -155,7 +172,7 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
                   <Icon name="pencil" />
                 </Button>
               </Grid.Column>
-              <Grid.Column width={1} floated="right">
+              <Grid.Column width={2} verticalAlign="middle">
                 <Button
                   icon
                   color="red"
@@ -163,12 +180,6 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
                 >
                   <Icon name="delete" />
                 </Button>
-              </Grid.Column>
-              {doc.attachmentUrl && (
-                <Image src={doc.attachmentUrl} size="small" wrapped />
-              )}
-              <Grid.Column width={16}>
-                <Divider />
               </Grid.Column>
             </Grid.Row>
           )
