@@ -87,7 +87,7 @@ export class Docs extends React.PureComponent<DocsProps, DocsState> {
   render() {
     return (
       <div>
-        <Header as="h1">DOCS</Header>
+        <Header as="h1">Content management</Header>
 
         {this.renderCreateDocInput()}
 
