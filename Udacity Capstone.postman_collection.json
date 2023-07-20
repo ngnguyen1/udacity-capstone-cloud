@@ -69,17 +69,65 @@
 					"response": []
 				},
 				{
+					"name": "Get deail doc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/test/docs/{{docId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"test",
+								"docs",
+								"{{docId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all docs",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code is 200\", () => {",
 									"    pm.response.to.have.status(200)",
 									"})",
 									"",
-									"pm.test(\"The number of docs should be 1\", function () {",
+									"pm.test(\"The number of docs should be 1\", () => {",
 									"    const jsonData = pm.response.json()",
 									"    pm.expect(jsonData.items.length).to.eql(1)",
 									"})"
@@ -122,7 +170,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code is 200\", () => {",
 									"    pm.response.to.have.status(200)",
 									"})"
 								],
@@ -175,7 +223,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code is 200\", () => {",
 									"    pm.response.to.have.status(200)",
 									"})"
 								],
@@ -223,7 +271,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code is 200\", () => {",
 									"    pm.response.to.have.status(200)",
 									"    pm.collectionVariables.set(\"docId\", \"\")",
 									"})"
@@ -321,7 +369,7 @@
 		},
 		{
 			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZlS3RjbWx4aUJIOFhWV0N5UVdDbSJ9.eyJpc3MiOiJodHRwczovL2Rldi13ZXp5NW9uNWluaGJtMzFzLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiI4T1htWlFoMVNOMHV0SUxFRUxPTkFvalJpOWptMTBLQiIsImlhdCI6MTY4OTc1NzA4NCwiZXhwIjoxNjg5NzkzMDg0LCJzdWIiOiJnaXRodWJ8MTQ4Njc5MCIsImF0X2hhc2giOiJVRmp3UmQ0SVBiYXAtRDBEeG5yaXRnIiwic2lkIjoic00zMllzcnlhUllmNjRlTTB5QWxqTnhLZTBWTDhnSDkiLCJub25jZSI6IjZwYTBTNlB-bC5udmdYb2lkS3NyNWxjaGwuajlPd0NGIn0.iAGsJBvvrA-k6heZbJQUkXVzQZ3Kx5m6nKC9ghs0tSoLieAk6sBIABFhB6akepuVP_5ytSUJn0rtObC1Ggy57oK-rYma86ciAHji2GYOCLlpxxIAOg1wPHjLQQl8W66p4-Afp2n6nIUhPxu9MhLo28NQqBXmy8zE08ibivPCk9JelM0GZM3NnYnzTWiezBz6M-RD6enZKVcUa55Gzt8pnccFOOsBw3UGPoEYdZs6GcJExZkqoQVOWAUOggiOUjpK-W0QFtZ7c0sK-M0CLGjGqfaC1kOYV2XGFpdDdKs5Rrmj08FHf4FUqUYzhs-43IpRd7YcWYYM7jLIQsrT3T_MDQ",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZlS3RjbWx4aUJIOFhWV0N5UVdDbSJ9.eyJpc3MiOiJodHRwczovL2Rldi13ZXp5NW9uNWluaGJtMzFzLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiI4T1htWlFoMVNOMHV0SUxFRUxPTkFvalJpOWptMTBLQiIsImlhdCI6MTY4OTg0MDM4MSwiZXhwIjoxNjg5ODc2MzgxLCJzdWIiOiJnaXRodWJ8MTQ4Njc5MCIsImF0X2hhc2giOiJJMHFLdDlUb3BSdEZIVVVIQVllSEZnIiwic2lkIjoic00zMllzcnlhUllmNjRlTTB5QWxqTnhLZTBWTDhnSDkiLCJub25jZSI6IkZBbnZnZTlFZkV2SjFGM2JjRWdxUnFPd2tKaUV1a3lPIn0.d1A3u4UUZgd7ht90LbrDtN9HaiIgo4VcVImi8h5sBrDxdbdXHsXS634vzSwNMmwCY9YkRQcWLqZWfeHKh76g00fHfYBkW6K0Y1FfoZqsf6vFNGg3nrII-kKP85dFhcLUcE0U9m8Wt9bodc7yuiuAMODo7n1__wMSnl-hap5yIX7jIvf0EGeHJnQr9tGl4oK8hni1AD7LcPU0poeg16aBGf4rYTO04vrMShwfVtaXregLsrUiczompeSHBCgJGhtZ2kJ3q_IgXp20tYOB_17TR7CgR4NSkaBLQyJKGyrYSWHIbG71ZWg7_WcWFU79fqy3BCOpP221LJ1UCwaWWl5p-w",
 			"type": "string"
 		},
 		{

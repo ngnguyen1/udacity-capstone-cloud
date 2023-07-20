@@ -88,6 +88,28 @@ functions:
         - s3:GetObject
         Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}
 
+  GetDoc:
+    handler: src/lambda/http/docs/get.handler
+    events:
+      - http:
+          method: get
+          path: docs/{docId}
+          cors: true
+          reqValidatorName: BodyValidator
+          authorizer: Auth
+    iamRoleStatementsName: ${self:provider.environment.PROJECT_NAME}-get-doc-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DOCS_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: 
+          - '*'
+
   CreateDoc:
     handler: src/lambda/http/docs/create.handler
     events:

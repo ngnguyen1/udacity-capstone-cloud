@@ -78,6 +78,22 @@ export class DocsAccess {
     }
   }
 
+  public async getDoc(userId: string, docId: string): Promise<DocItem> {
+    logger.info(`Getting doc ${docId}`)
+
+    const result = await this.docDocument.get({
+      TableName: this.docTable,
+      Key: {
+        docId,
+        userId
+      }
+    })
+    .promise()
+
+    const item = result.Item
+    return item as DocItem
+}
+
   public async updateDoc(userId: string, docId: string, doc: DocUpdate) {
     logger.info(`Updating ${docId} ...`)
     
@@ -88,7 +104,7 @@ export class DocsAccess {
           docId,
           userId
         },
-        // UpdateExpression: "set #title = :name, #dueDate = :dueDate, #done = :done",
+        // UpdateExpression: "set #title = :title, #publishedDate = :publishedDate",
         UpdateExpression: "set #title = :title",
         ExpressionAttributeNames: {
           "#title": "title"

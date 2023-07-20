@@ -1,6 +1,7 @@
 import { DocsAccess } from '../dataLayer/docsAccess'
 import { CreateDocRequest } from '../requests/CreateDocRequest'
 import { UpdateDocRequest } from '../requests/UpdateDocRequest'
+import { DocItem } from '../models/DocCreate'
 import { createLogger } from '../utils/logger'
 // TODO: add type for uuid
 import * as uuid from 'uuid'
@@ -34,6 +35,11 @@ export const createAttachmentPresignedUrl = async (userId: string, docId: string
 export const getDocsForUser = async (userId: string) => {
   logger.info("Get list of docs for specific user")
   return await docAccessLayer.getDocs(userId)
+}
+
+export async function getDocForUser(userId: string, docId: string): Promise<DocItem> {
+  logger.info('Getting doc for user')
+  return docAccessLayer.getDoc(userId, docId)
 }
 
 export const updateDoc = async (userId: string, docId: string, request: UpdateDocRequest) => {
